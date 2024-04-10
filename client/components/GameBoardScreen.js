@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Alert } from 'react-native';
+import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 
 const GameBoardScreen = () => {
   // State variables
   const [selectedWords, setSelectedWords] = useState(new Set());
+  const [submittedWords, setSubmittedWords] = useState([]);
   const [words, setWords] = useState([]);
   // Add more state variables as needed
 
@@ -11,7 +12,7 @@ const GameBoardScreen = () => {
   useEffect(() => {
     const generateRandomWords = () => {
       const randomWords = [
-        'Apple', 'Banana', 'Cherry', 'Grape', 'Lemon', 'Orange', 'Peach', 'Pear',
+        'Apple', 'Banana', 'Cherry!!', 'Grape', 'Lemon!!', 'Orange', 'Peach', 'Pear',
         'Strawberry', 'Watermelon', 'Pineapple', 'Blueberry', 'Mango', 'Kiwi', 'Pomegranate', 'Coconut',
         'Tomato', 'Avocado', 'Raspberry', 'Blackberry', 'Cranberry', 'Fig', 'Guava', 'Lychee'
       ];
@@ -43,6 +44,7 @@ const GameBoardScreen = () => {
     } else {
       // User has not selected 4 words
       Alert.alert('You Lost!', 'Please select exactly 4 words.');
+      console.log("check!!!", selectedWords)
     }
   };
 
@@ -52,19 +54,15 @@ const GameBoardScreen = () => {
       <Text>Game Board</Text>
       {/* Add game board UI components */}
       {/* Render the 4x4 grid of word cards */}
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View style={styles.wordGrid}>
         {words.map((word, index) => (
-          <Button
-            key={index}
-            title={word}
-            onPress={() => toggleSelectWord(word)}
-            style={{
-              width: '25%',
-              height: 50,
-              margin: 5,
-              backgroundColor: selectedWords.has(word) ? 'lightblue' : 'lightgray'
-            }}
-          />
+          <View key={index} style={[styles.wordContainer, selectedWords.has(word) && styles.selectedWord]}>
+            <Button
+              title={word}
+              onPress={() => toggleSelectWord(word)}
+              style={styles.wordButton}
+            />
+          </View>
         ))}
       </View>
       {/* Button to submit selected words */}
@@ -72,5 +70,32 @@ const GameBoardScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  wordGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  wordContainer: {
+    width: '25%',
+    height: 50,
+    margin: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectedWord: {
+    backgroundColor: 'lightgrey',
+  },
+  wordButton: {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 export default GameBoardScreen;
