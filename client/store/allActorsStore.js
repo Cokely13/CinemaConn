@@ -29,8 +29,8 @@ const _deleteActor = (actor) => {
 export const fetchActors = () => {
   return async (dispatch) => {
 
-        const {data}= await Axios.get("/api/actors");
-        console.log('TEST!!!', data)
+        const {data}= await Axios.get('http://172.16.0.173:8080/api/actors');
+        // console.log('TEST!!!', data)
         dispatch(setActors(data));
   };
 };

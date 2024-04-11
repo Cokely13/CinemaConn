@@ -17,13 +17,13 @@ const GameBoardScreen = () => {
 
   // Add more state variables as needed
 
-  console.log("CHEC!!", allActors)
-
   // Generate an array of random words
   useEffect(() => {
     const generateRandomWords = () => {
       // const actors = ["mike","steve", "john", "jake", "matt", "jamal", "ac", "mike","steve", "john", "jake", "matt", "jamal", "ac", "mike","steve", "john", "jake", "matt", "jamal", "ac", "mike","steve", "john", "jake", "matt", "jamal", "ac"]
       const actors = allActors.map(actor => actor.name);
+
+      console.log("actor", actors)
       setWords(actors.sort(() => 0.5 - Math.random()).slice(0, 16)); // Select 16 random words
     };
     generateRandomWords();
