@@ -17,7 +17,7 @@ const GameBoardScreen = () => {
 
   // Add more state variables as needed
 
-  // console.log("CHECL!!", allActors)
+  console.log("CHEC!!", allActors)
 
   // Generate an array of random words
   useEffect(() => {
