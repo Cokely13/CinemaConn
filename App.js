@@ -1,34 +1,23 @@
-// // import React from 'react';
+
+
 // import { StatusBar } from 'expo-status-bar';
 // import { StyleSheet, Text, View } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import HomeScreen from './client/components/HomeScreen'; // Import the Home screen component
-// import GameBoardScreen from './client/components/GameBoardScreen'; // Import the GameBoard screen component
-
-
-// const Stack = createStackNavigator();
-
-// // export default function App() {
-// //   return (
-// //     <NavigationContainer>
-// //       <Stack.Navigator initialRouteName="Home">
-// //         <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Cinema Connection' }} />
-// //         <Stack.Screen name="GameBoard" component={GameBoardScreen} options={{ title: 'Game Board' }} />
-// //       </Stack.Navigator>
-// //     </NavigationContainer>
-// //   );
-// // }
+// import GameBoardScreen from './client/components/GameBoardScreen';
+// import {Provider} from 'react-redux'
+// import store from './client/store'
 
 // export default function App() {
 //   return (
+//     <Provider store={store} >
 //     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!!</Text>
+//       {/* <Text>Open up App.js to start working on your app!!</Text> */}
 //       <StatusBar style="auto" />
+//       <GameBoardScreen/>
+
 //     </View>
+//     // </Provider>
 //   );
 // }
-
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -42,15 +31,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import GameBoardScreen from './client/components/GameBoardScreen';
+import { Provider } from 'react-redux'; // Ensure Provider is imported from 'react-redux'
+import store from './client/store';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      {/* <Text>Open up App.js to start working on your app!!</Text> */}
-      <StatusBar style="auto" />
-      <GameBoardScreen/>
 
-    </View>
+  return (
+    <Provider store={store}>
+      <View style={styles.container}>
+        {/* <Text>Open up App.js to start working on your app!!</Text> */}
+        <StatusBar style="auto" />
+        <GameBoardScreen />
+      </View>
+      </Provider>
 
   );
 }

@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Button, Alert, StyleSheet } from 'react-native';
+import { fetchActors } from '../store/allActorsStore';
 
 const GameBoardScreen = () => {
+  const dispatch = useDispatch();
   // State variables
   const [selectedWords, setSelectedWords] = useState(new Set());
   const [submittedWords, setSubmittedWords] = useState([]);
   const [words, setWords] = useState([]);
+  const allActors = useSelector(state => state.allActors);
+
+  useEffect(() => {
+    dispatch(fetchActors());
+  }, [dispatch]);
+
   // Add more state variables as needed
+
+  // console.log("CHECL!!", allActors)
 
   // Generate an array of random words
   useEffect(() => {
     const generateRandomWords = () => {
-      const randomWords = [
-        'Apple', 'Banana', 'Cherry!!', 'Grape', 'Lemon!!', 'Orange', 'Peach', 'Pear',
-        'Strawberry', 'Watermelon', 'Pineapple', 'Blueberry', 'Mango', 'Kiwi', 'Pomegranate', 'Coconut',
-        'Tomato', 'Avocado', 'Raspberry', 'Blackberry', 'Cranberry', 'Fig', 'Guava', 'Lychee'
-      ];
-      setWords(randomWords.sort(() => 0.5 - Math.random()).slice(0, 16)); // Select 16 random words
+      // const actors = ["mike","steve", "john", "jake", "matt", "jamal", "ac", "mike","steve", "john", "jake", "matt", "jamal", "ac", "mike","steve", "john", "jake", "matt", "jamal", "ac", "mike","steve", "john", "jake", "matt", "jamal", "ac"]
+      const actors = allActors.map(actor => actor.name);
+      setWords(actors.sort(() => 0.5 - Math.random()).slice(0, 16)); // Select 16 random words
     };
     generateRandomWords();
   }, []);
