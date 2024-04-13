@@ -112,7 +112,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Button, Modal } from 'react-native';
+import { View, Text, Button, Alert, Modal } from 'react-native';
 import { fetchActors } from '../store/allActorsStore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
@@ -166,7 +166,10 @@ const GameBoardScreen = () => {
   const handleSubmit = () => {
     if (selectedWords.size === 4) {
       // Handle submission logic
+      // User has selected 4 words
+      Alert.alert('You Won!', 'Congratulations!');
     } else {
+      Alert.alert('You LOST!', 'LOSER!');
       // Handle error or notification for selecting less than 4 words
     }
   };
