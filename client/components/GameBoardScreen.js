@@ -1,114 +1,4 @@
-// import React, { useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { View, Text, Button, Alert, StyleSheet } from 'react-native';
-// import { fetchActors } from '../store/allActorsStore';
 
-
-
-
-// const GameBoardScreen = () => {
-//   const dispatch = useDispatch();
-//   // State variables
-//   const [selectedWords, setSelectedWords] = useState(new Set());
-//   const [submittedWords, setSubmittedWords] = useState([]);
-//   const [words, setWords] = useState([]);
-//   const allActors = useSelector(state => state.allActors);
-
-//   useEffect(() => {
-//     dispatch(fetchActors());
-//   }, [dispatch]);
-
-//   // Add more state variables as needed
-
-//   // Generate an array of random words
-//   useEffect(() => {
-//     const generateRandomWords = () => {
-//       const actors = allActors.map(actor => actor.name);
-
-//       console.log("actor", actors)
-//       setWords(actors.sort(() => 0.5 - Math.random()).slice(0, 16)); // Select 16 random words
-//     };
-//     generateRandomWords();
-//   }, []);
-
-//   // Function to handle word selection
-//   const toggleSelectWord = (word) => {
-//     // Logic to handle word selection
-//     const newSelectedWords = new Set(selectedWords);
-//     if (newSelectedWords.has(word)) {
-//       // Deselect the word
-//       newSelectedWords.delete(word);
-//     } else {
-//       // Select the word
-//       newSelectedWords.add(word);
-//     }
-//     setSelectedWords(newSelectedWords);
-//   };
-
-//   // Function to handle submission of selected words
-//   const handleSubmit = () => {
-//     // Logic to handle word submission
-//     if (selectedWords.size === 4) {
-//       // User has selected 4 words
-//       Alert.alert('You Won!', 'Congratulations!');
-//     } else {
-//       // User has not selected 4 words
-//       Alert.alert('You Lost!', 'Please select exactly 4 words.');
-//       console.log("check!!!", selectedWords)
-//     }
-//   };
-
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       {/* Render game board UI here */}
-//       <Text>Game Board</Text>
-//       {/* Add game board UI components */}
-//       {/* Render the 4x4 grid of word cards */}
-//       <View style={styles.wordGrid}>
-//         {words.map((word, index) => (
-//           <View key={index} style={[styles.wordContainer, selectedWords.has(word) && styles.selectedWord]}>
-//             <Button
-//               title={word}
-//               onPress={() => toggleSelectWord(word)}
-//               style={styles.wordButton}
-//             />
-//           </View>
-//         ))}
-//       </View>
-//       {/* Button to submit selected words */}
-//       <Button title="Submit" onPress={handleSubmit} />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   wordGrid: {
-//     flexDirection: 'row',
-//     flexWrap: 'wrap',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     marginTop: 20,
-//   },
-//   wordContainer: {
-//     width: '25%',
-//     height: 50,
-//     margin: 5,
-//     borderWidth: 1,
-//     borderColor: 'black',
-//     backgroundColor: 'transparent',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   selectedWord: {
-//     backgroundColor: 'lightgrey',
-//   },
-//   wordButton: {
-//     width: '100%',
-//     height: '100%',
-//   },
-// });
-
-// export default GameBoardScreen;
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -134,6 +24,11 @@ const GameBoardScreen = () => {
   const [submittedWords, setSubmittedWords] = useState([]);
   const [gameWords, setGameWords] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [picture, setPicture] = useState([]);
+  const [row3, setRow3] = useState();
+  const [row1, setRow1] = useState();
+  const [row2, setRow2] = useState();
+  const [row4, setRow4] = useState();
 
   useEffect(() => {
     dispatch(fetchActors());
@@ -163,16 +58,55 @@ const GameBoardScreen = () => {
     setSelectedWords(newSelection);
   };
 
-  const handleSubmit = () => {
-    if (selectedWords.size === 4) {
-      // Handle submission logic
-      // User has selected 4 words
+
+  const shuffleActorsAndMovies = () => {
+    // Use allActors from the redux store instead of the hardcoded qbs array
+    const shuffledActors = [...allActors].sort(() => 0.5 - Math.random());
+
+    // Select first 4 QBs
+    const selectedActors = shuffledActors.slice(0, 4);
+
+    // Extract and shuffle WRs from the selected QBs
+    const selectedMovies = selectedActors.flatMap(actor =>
+      actor.movies.sort(() => 0.5 - Math.random()).slice(0, 4)
+    ).sort(() => 0.5 - Math.random());
+
+    setGameWords(selectedMovies.map(movie => movie.name));
+  };
+
+  // Ensure this useEffect hook is called after your component is mounted and whenever allActors changes
+  useEffect(() => {
+    if (allActors.length > 0) {
+      shuffleActorsAndMovies();
+    }
+  }, [allActors]);
+
+ const handleSubmit = () => {
+  if (selectedWords.size === 4) {
+    const selectedWordArray = Array.from(selectedWords);
+    // Implement your submission logic here
+
+    // Example: Check if all selected words are from the same actor
+    const actorNames = selectedWordArray.map(word => allActors.find(actor => actor.movies.some(movie => movie.name === word)).name);
+    const isSameActor = actorNames.every((name, index, arr) => name === arr[0]);
+
+    if (isSameActor) {
+      // Handle correct submission
+      // Example: Show success message
       Alert.alert('You Won!', 'Congratulations!');
     } else {
-      Alert.alert('You LOST!', 'LOSER!');
-      // Handle error or notification for selecting less than 4 words
+      // Handle incorrect submission
+      // Example: Show error message
+      Alert.alert('You LOST!', 'Selected words are not from the same actor.');
     }
-  };
+
+    // Clear selected words after submission
+    setSelectedWords(new Set());
+  } else {
+    // Handle error or notification for selecting less than 4 words
+    Alert.alert('Error', 'Please select exactly 4 words.');
+  }
+};
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
