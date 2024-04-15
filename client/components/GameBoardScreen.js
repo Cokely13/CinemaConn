@@ -220,6 +220,12 @@ const GameBoardScreen = () => {
   };
 
 
+  const handleShuffleWords = () => {
+    // Shuffle the order of the words while keeping the words the same
+    const shuffledGameWords = [...gameWords].sort(() => 0.5 - Math.random());
+    setGameWords(shuffledGameWords);
+  };
+
   const shuffleActorsAndMovies = () => {
     // Use allActors from the redux store instead of the hardcoded qbs array
     const shuffledActors = [...allActors].sort(() => 0.5 - Math.random());
@@ -310,6 +316,7 @@ const GameBoardScreen = () => {
       <View style={{ flexDirection: 'row', marginTop: 10 }}>
         <Button title="Submit" onPress={handleSubmit} />
         <Button title="Play Again!!" onPress={handlePlayAgain} />
+        <Button title="Shuffle" onPress={handleShuffleWords} />
       </View>
       {showConfetti && <Confetti />}
     </ScrollView>
