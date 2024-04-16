@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Button, Alert, Modal, ScrollView, Image } from 'react-native'; // Import ScrollView
+import { View, Text, Button, Alert, Modal, ScrollView, Image, TouchableOpacity } from 'react-native'; // Import ScrollView
 import { fetchActors } from '../store/allActorsStore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
@@ -8,15 +8,27 @@ import Confetti from 'react-native-confetti';
 import { styles } from './styles';
 
 // Individual word card component
+// const WordCard = ({ word, onSelect, isSelected }) => {
+//   return (
+//     <View style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10 }}>
+//       <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'red', backgroundColor: isSelected ? 'lightgrey' : 'transparent', justifyContent: 'center', alignItems: 'center' }}>
+//         <Button title={word} onPress={() => onSelect(word)} />
+//       </View>
+//     </View>
+//   );
+// };
+
 const WordCard = ({ word, onSelect, isSelected }) => {
   return (
-    <View style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10 }}>
+    <TouchableOpacity onPress={() => onSelect(word)} style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10 }}>
       <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'red', backgroundColor: isSelected ? 'lightgrey' : 'transparent', justifyContent: 'center', alignItems: 'center' }}>
-        <Button title={word} onPress={() => onSelect(word)} />
+        <Text>{word}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
+
+
 
 const GameBoardScreen = () => {
   const dispatch = useDispatch();
@@ -215,7 +227,7 @@ return (
         <Image source={{ uri: picture[3][0] }}  style={styles.image}/>
       </View>
     )}
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
       {gameWords.map((word, index) => (
         <WordCard
           key={index}
@@ -225,11 +237,24 @@ return (
         />
       ))}
     </View>
-    <View style={{ flexDirection: 'row', marginTop: 10 }}>
-    {!row4 && ( <Button title="Submit" onPress={handleSubmit} />)}
-      {row4 && (<Button title="Play Again!!" onPress={handlePlayAgain} />)}
-      {!row4 && (  <Button title="Shuffle" onPress={handleShuffleWords} />)}
-    </View>
+    <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 30  }}>
+  {!row4 && (
+    <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <Text style={styles.buttonText}>Submit</Text>
+    </TouchableOpacity>
+  )}
+  {row4 && (
+    <TouchableOpacity style={styles.button} onPress={handlePlayAgain}>
+      <Text style={styles.buttonText}>Play Again!!</Text>
+    </TouchableOpacity>
+  )}
+ {!row4 && (
+    <TouchableOpacity style={styles.shuffleButton} onPress={handleShuffleWords}>
+      <Text style={styles.shuffleButtonText}>Shuffle</Text>
+    </TouchableOpacity>
+  )}
+</View>
+
     {showConfetti && <Confetti />}
   </ScrollView>
 );
