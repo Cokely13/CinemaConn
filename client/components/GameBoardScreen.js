@@ -10,8 +10,10 @@ import { styles } from './styles';
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected }) => {
   return (
-    <View style={{ borderRadius: 10, borderWidth: 5, margin: 5, padding: 10, borderColor: 'red', backgroundColor: isSelected ? 'lightgrey' : 'transparent' }}>
-      <Button title={word} onPress={() => onSelect(word)} />
+    <View style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10 }}>
+      <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'red', backgroundColor: isSelected ? 'lightgrey' : 'transparent', justifyContent: 'center', alignItems: 'center' }}>
+        <Button title={word} onPress={() => onSelect(word)} />
+      </View>
     </View>
   );
 };
@@ -186,35 +188,6 @@ const GameBoardScreen = () => {
   };
 
 
-//   return (
-//     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       <Text>Game Board</Text>
-//       {row1 ? <Text>Actor 1: <Image source={{ uri: picture[0][0] }} style={{ width: 100, height: 100 }} /></Text>: (
-//         <Text></Text>
-//       )}
-//       {row2?<Text>Actor 2:  <Image source={{ uri: picture[1][0] }} style={{ width: 100, height: 100 }} /></Text>:  <Text></Text>}
-//       {row3? <Text>Actor 3:  <Image source={{ uri: picture[2][0] }} style={{ width: 100, height: 100 }} /></Text>:  <Text></Text>}
-//       {row4? <Text>Actor 4:  <Image source={{ uri: picture[3][0] }} style={{ width: 100, height: 100 }} /></Text>:  <Text></Text>}
-//       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-//         {gameWords.map((word, index) => (
-//           <WordCard
-//             key={index}
-//             word={word}
-//             onSelect={toggleSelectWord}
-//             isSelected={selectedWords.has(word)}
-//           />
-//         ))}
-//       </View>
-//       <View style={{ flexDirection: 'row', marginTop: 10 }}>
-//         <Button title="Submit" onPress={handleSubmit} />
-//         <Button title="Play Again!!" onPress={handlePlayAgain} />
-//         <Button title="Shuffle" onPress={handleShuffleWords} />
-//       </View>
-//       {showConfetti && <Confetti />}
-//     </ScrollView>
-//   );
-// };
-
 return (
   <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
     <Text style={{ marginBottom: 10 }}>Game Board</Text>
@@ -253,9 +226,9 @@ return (
       ))}
     </View>
     <View style={{ flexDirection: 'row', marginTop: 10 }}>
-      <Button title="Submit" onPress={handleSubmit} />
-      <Button title="Play Again!!" onPress={handlePlayAgain} />
-      <Button title="Shuffle" onPress={handleShuffleWords} />
+    {!row4 && ( <Button title="Submit" onPress={handleSubmit} />)}
+      {row4 && (<Button title="Play Again!!" onPress={handlePlayAgain} />)}
+      {!row4 && (  <Button title="Shuffle" onPress={handleShuffleWords} />)}
     </View>
     {showConfetti && <Confetti />}
   </ScrollView>
