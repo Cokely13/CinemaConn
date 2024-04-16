@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Button, Alert, Modal, ScrollView } from 'react-native'; // Import ScrollView
+import { View, Text, Button, Alert, Modal, ScrollView, Image } from 'react-native'; // Import ScrollView
 import { fetchActors } from '../store/allActorsStore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
@@ -183,17 +183,21 @@ const GameBoardScreen = () => {
 
         images.push(actorImages)
         setPicture(images)
+        console.log("images!!!FIRST", picture)
 
         if (submittedWords.length === 4){
           setRow2(true)
+          console.log("images", picture)
         }
 
         if (submittedWords.length === 8){
+          console.log("images!!3", picture)
           setRow3(true)
         }
 
         if (submittedWords.length === 12){
           setRow4(true)
+          console.log("images!!@4", picture)
 
           Alert.alert('YOU WON!!!!!');
         }
@@ -230,7 +234,12 @@ const GameBoardScreen = () => {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Game Board</Text>
-      {row1? <Text>{row1}</Text>:  <Text>Game Board!!!</Text>}
+      {row1 ? <Image source={{ uri: picture[0][0] }} style={{ width: 100, height: 100 }} />: (
+        <Text></Text>
+      )}
+      {row2? <Image source={{ uri: picture[1][0] }} style={{ width: 100, height: 100 }} />:  <Text></Text>}
+      {row3? <Image source={{ uri: picture[2][0] }} style={{ width: 100, height: 100 }} />:  <Text></Text>}
+      {row4? <Image source={{ uri: picture[3][0] }} style={{ width: 100, height: 100 }} />:  <Text></Text>}
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
         {gameWords.map((word, index) => (
           <WordCard
