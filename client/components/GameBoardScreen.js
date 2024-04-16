@@ -5,11 +5,12 @@ import { fetchActors } from '../store/allActorsStore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-native-confetti';
+import { styles } from './styles';
 
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected }) => {
   return (
-    <View style={{ borderWidth: 1, margin: 5, padding: 10, backgroundColor: isSelected ? 'lightgrey' : 'transparent' }}>
+    <View style={{ borderRadius: 10, borderWidth: 5, margin: 5, padding: 10, borderColor: 'red', backgroundColor: isSelected ? 'lightgrey' : 'transparent' }}>
       <Button title={word} onPress={() => onSelect(word)} />
     </View>
   );
@@ -99,53 +100,7 @@ const GameBoardScreen = () => {
     setRow4(false);
   };
 
-  // const handleSubmit = () => {
-  //   if (selectedWords.size === 4) {
-  //     const selectedWordArray = Array.from(selectedWords);
-  //     const actorImages = [];
 
-  //     // Check if there is a match for all selected movies from the same actor
-  //     const matchingActors = allActors.filter(actor => {
-  //       const matchingMovies = selectedWordArray.filter(movieName => actor.movies.some(movie => movie.name === movieName));
-
-  //       const allMovieMatch = matchingMovies.length === 4;
-
-  //       if (allMovieMatch) {
-  //         actorImages.push(actor.imagePath); // Capture the QB's image path when a match is found
-  //       }
-
-
-  //       return matchingMovies.length === 4;
-  //     });
-
-  //     if (matchingActors.length === 1) {
-  //       // Correctly guessed all movies from the same actor
-  //       // Example: Show success message
-  //       Alert.alert('RIGHT!', 'You guessed all movies from the same actor.', [
-  //         { text: 'OK', onPress: () => {
-  //           // Remove the selected words from the game board
-  //           const remainingWords = gameWords.filter(word => !selectedWords.has(word));
-  //           setGameWords(remainingWords);
-
-  //           // Update the UI to display "ONE RIGHT!"
-  //           setRow1(matchingActors.name)
-  //           setSelectedWords(new Set());
-  //         }}
-  //       ]);
-  //     } else {
-  //       // Incorrect guess
-  //       // Example: Show error message
-  //       Alert.alert('WRONG!', 'Selected words are not from the same actor.');
-  //       setSelectedWords(new Set());
-  //     }
-
-  //     // Clear selected words after submission
-  //     setSelectedWords(new Set());
-  //   } else {
-  //     // Handle error or notification for selecting less than 4 words
-  //     Alert.alert('Error', 'Please select exactly 4 words.');
-  //   }
-  // };
 
   const handleSubmit = () => {
     if (selectedWords.size === 4) {
@@ -231,33 +186,80 @@ const GameBoardScreen = () => {
   };
 
 
-  return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Game Board</Text>
-      {row1 ? <Image source={{ uri: picture[0][0] }} style={{ width: 100, height: 100 }} />: (
-        <Text></Text>
-      )}
-      {row2? <Image source={{ uri: picture[1][0] }} style={{ width: 100, height: 100 }} />:  <Text></Text>}
-      {row3? <Image source={{ uri: picture[2][0] }} style={{ width: 100, height: 100 }} />:  <Text></Text>}
-      {row4? <Image source={{ uri: picture[3][0] }} style={{ width: 100, height: 100 }} />:  <Text></Text>}
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-        {gameWords.map((word, index) => (
-          <WordCard
-            key={index}
-            word={word}
-            onSelect={toggleSelectWord}
-            isSelected={selectedWords.has(word)}
-          />
-        ))}
+//   return (
+//     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Game Board</Text>
+//       {row1 ? <Text>Actor 1: <Image source={{ uri: picture[0][0] }} style={{ width: 100, height: 100 }} /></Text>: (
+//         <Text></Text>
+//       )}
+//       {row2?<Text>Actor 2:  <Image source={{ uri: picture[1][0] }} style={{ width: 100, height: 100 }} /></Text>:  <Text></Text>}
+//       {row3? <Text>Actor 3:  <Image source={{ uri: picture[2][0] }} style={{ width: 100, height: 100 }} /></Text>:  <Text></Text>}
+//       {row4? <Text>Actor 4:  <Image source={{ uri: picture[3][0] }} style={{ width: 100, height: 100 }} /></Text>:  <Text></Text>}
+//       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+//         {gameWords.map((word, index) => (
+//           <WordCard
+//             key={index}
+//             word={word}
+//             onSelect={toggleSelectWord}
+//             isSelected={selectedWords.has(word)}
+//           />
+//         ))}
+//       </View>
+//       <View style={{ flexDirection: 'row', marginTop: 10 }}>
+//         <Button title="Submit" onPress={handleSubmit} />
+//         <Button title="Play Again!!" onPress={handlePlayAgain} />
+//         <Button title="Shuffle" onPress={handleShuffleWords} />
+//       </View>
+//       {showConfetti && <Confetti />}
+//     </ScrollView>
+//   );
+// };
+
+return (
+  <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Text style={{ marginBottom: 10 }}>Game Board</Text>
+    {row1 && (
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        <Text>Actor 1: </Text>
+        <Image source={{ uri: picture[0][0] }}  style={styles.image} />
       </View>
-      <View style={{ flexDirection: 'row', marginTop: 10 }}>
-        <Button title="Submit" onPress={handleSubmit} />
-        <Button title="Play Again!!" onPress={handlePlayAgain} />
-        <Button title="Shuffle" onPress={handleShuffleWords} />
+    )}
+    {row2 && (
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        <Text>Actor 2: </Text>
+        <Image source={{ uri: picture[1][0] }}  style={styles.image}/>
       </View>
-      {showConfetti && <Confetti />}
-    </ScrollView>
-  );
+    )}
+    {row3 && (
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        <Text>Actor 3: </Text>
+        <Image source={{ uri: picture[2][0] }}  style={styles.image} />
+      </View>
+    )}
+    {row4 && (
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        <Text>Actor 4: </Text>
+        <Image source={{ uri: picture[3][0] }}  style={styles.image}/>
+      </View>
+    )}
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+      {gameWords.map((word, index) => (
+        <WordCard
+          key={index}
+          word={word}
+          onSelect={toggleSelectWord}
+          isSelected={selectedWords.has(word)}
+        />
+      ))}
+    </View>
+    <View style={{ flexDirection: 'row', marginTop: 10 }}>
+      <Button title="Submit" onPress={handleSubmit} />
+      <Button title="Play Again!!" onPress={handlePlayAgain} />
+      <Button title="Shuffle" onPress={handleShuffleWords} />
+    </View>
+    {showConfetti && <Confetti />}
+  </ScrollView>
+);
 };
 
 export default GameBoardScreen;
