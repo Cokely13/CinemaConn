@@ -192,7 +192,6 @@ const GameBoardScreen = () => {
 
 return (
   <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text style={{ marginBottom: 10 }}>Game Board</Text>
     {row1 && (
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
         <Text>Actor 1: </Text>
