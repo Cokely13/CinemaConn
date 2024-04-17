@@ -7,22 +7,12 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-native-confetti';
 import { styles } from './styles';
 
-// Individual word card component
-// const WordCard = ({ word, onSelect, isSelected }) => {
-//   return (
-//     <View style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10 }}>
-//       <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'red', backgroundColor: isSelected ? 'lightgrey' : 'transparent', justifyContent: 'center', alignItems: 'center' }}>
-//         <Button title={word} onPress={() => onSelect(word)} />
-//       </View>
-//     </View>
-//   );
-// };
 
 const WordCard = ({ word, onSelect, isSelected }) => {
   return (
     <TouchableOpacity onPress={() => onSelect(word)} style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10 }}>
       <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'red', backgroundColor: isSelected ? 'lightgrey' : 'transparent', justifyContent: 'center', alignItems: 'center' }}>
-        <Text>{word}</Text>
+        <Text style={{ textAlign: 'center' }}>{word}</Text>
       </View>
     </TouchableOpacity>
   );
