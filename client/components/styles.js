@@ -32,6 +32,17 @@ export const styles = StyleSheet.create({
       fontSize: 16,
       textAlign: 'center',
     },
-
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+    },
+    howToPlay: {
+      marginVertical: 20,
+      fontWeight: 'bold',
+      fontSize: 18,
+      textDecorationLine: 'underline', // Add underline to indicate it's clickable
+    },
 
 });

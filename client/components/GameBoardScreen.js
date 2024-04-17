@@ -133,6 +133,9 @@ const GameBoardScreen = () => {
       });
 
       if (isSameActor) {
+        if (submittedWords.length !== 12){
+        Alert.alert('CORRECT!');
+        }
         // Correctly guessed all WRs from the same QB
         const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((movieName, idx) => ({ name: movieName, actorImagePath: actorImages[idx] }))];
         setRow1(true)
@@ -142,21 +145,17 @@ const GameBoardScreen = () => {
 
         images.push(actorImages)
         setPicture(images)
-        console.log("images!!!FIRST", picture)
 
         if (submittedWords.length === 4){
           setRow2(true)
-          console.log("images", picture)
         }
 
         if (submittedWords.length === 8){
-          console.log("images!!3", picture)
           setRow3(true)
         }
 
         if (submittedWords.length === 12){
           setRow4(true)
-          console.log("images!!@4", picture)
 
           Alert.alert('YOU WON!!!!!');
         }

@@ -23,7 +23,10 @@ const Index = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%"
+    width: "100%",
+    borderColor: 'yellow', // Border color
+    borderWidth: 20, // Border width
+    borderRadius: 10, // Border radius (optional)
   },
 });
 
