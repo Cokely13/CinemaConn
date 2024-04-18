@@ -13,7 +13,7 @@ const Index = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Welcome">
           <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ title: 'Cinema Connection!!!' }} />
-          <Stack.Screen name="GameBoard" component={GameBoardScreen} options={{ title: 'Game Board' }} />
+          <Stack.Screen name="GameBoard" component={GameBoardScreen} options={{ title: 'Game Board!' }}  />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
