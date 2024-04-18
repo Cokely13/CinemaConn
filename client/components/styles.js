@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
       borderRadius: 5,
       marginHorizontal: 5,
       marginTop: 20, // Add marginTop to push the button below the text
+      marginBottom: 20,
     },
     buttonText: {
       color: '#fff',
@@ -27,6 +28,8 @@ export const styles = StyleSheet.create({
       paddingHorizontal: 20,
       borderRadius: 5,
       marginHorizontal: 5,
+      marginTop: 20,
+      marginBottom: 20,
     },
     shuffleButtonText: {
       color: '#fff',
@@ -38,22 +41,21 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: 20,
+      width: '100%',
     },
     howToPlay: {
       marginVertical: 20,
       fontWeight: 'bold',
       fontSize: 18,
       textDecorationLine: 'underline', // Add underline to indicate it's clickable
-      color: '#fff', // Add color to make the text visible
+      color: 'yellow', // Add color to make the text visible
     },
     background: {
       flex: 1,
       resizeMode: 'cover', // Ensure the background image covers the entire screen
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    container: {
-      flex: 1,
+      width: '100%',
     },
     welcomeText: {
       fontSize: 30,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Button, Alert, Modal, ScrollView, Image, TouchableOpacity } from 'react-native'; // Import ScrollView
+import { View, Text, Button, Alert, Modal, ScrollView, Image, TouchableOpacity, ImageBackground } from 'react-native'; // Import ScrollView
 import { fetchActors } from '../store/allActorsStore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
@@ -10,9 +10,9 @@ import { styles } from './styles';
 
 const WordCard = ({ word, onSelect, isSelected }) => {
   return (
-    <TouchableOpacity onPress={() => onSelect(word)} style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10 }}>
-      <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'red', backgroundColor: isSelected ? 'lightgrey' : 'transparent', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ textAlign: 'center' }}>{word}</Text>
+    <TouchableOpacity onPress={() => onSelect(word)} style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10, padding: 5 }}>
+      <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'red', backgroundColor: isSelected ? 'grey' : 'lightgrey', justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ textAlign: 'center', fontWeight: 'bold'}}>{word}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -28,11 +28,11 @@ const GameBoardScreen = () => {
   const [gameWords, setGameWords] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [picture, setPicture] = useState([]);
-  const [correctActor, setCorrectActor] = useState([]);
   const [row3, setRow3] = useState();
   const [row1, setRow1] = useState();
   const [row2, setRow2] = useState();
   const [row4, setRow4] = useState();
+  const [mistakes, setMistakes] = useState(0);
 
   useEffect(() => {
     dispatch(fetchActors());
@@ -97,6 +97,7 @@ const GameBoardScreen = () => {
     // Clear any submitted words and selections
     setSubmittedWords([]);
     setSelectedWords(new Set());
+    setMistakes(0);
     // Reset UI state if needed
     setRow1(false);
     setRow2(false);
@@ -168,8 +169,8 @@ const GameBoardScreen = () => {
         setSelectedWords(new Set()); // Clear the selections
       } else {
 
-        // setMistakes((prev) => prev + 1);
-        if (matchingActors == 7) {
+        setMistakes((prev) => prev + 1);
+        if (mistakes + 1 >= 5) {
           Alert.alert('YOU LOST!!');
         } else {
           // Check if there is only one quarterback matching three out of four receivers
@@ -190,28 +191,33 @@ const GameBoardScreen = () => {
 
 
 return (
-  <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+  <View style={{ flex: 1 }}>
+  <View style={{ backgroundColor: 'black', width: '100%', height: 40, justifyContent: 'center', alignItems: 'center' }}>
+    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Mistakes:{5 - mistakes}</Text>
+  </View>
+  <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+    <ImageBackground source={require('../../assets/imax.jpg')} style={styles.background} pointerEvents="auto" >
     {row1 && (
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <Text>Actor 1: </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginTop: 20 }}>
+        <Text style={{ color: '#fff', fontWeight: "bold", marginRight: 20, fontSize: 30,}} >Actor 1: </Text>
         <Image source={{ uri: picture[0][0] }}  style={styles.image} />
       </View>
     )}
     {row2 && (
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <Text>Actor 2: </Text>
+        <Text style={{ color: '#fff', fontWeight: "bold", marginRight: 20, fontSize: 30,}}>Actor 2: </Text>
         <Image source={{ uri: picture[1][0] }}  style={styles.image}/>
       </View>
     )}
     {row3 && (
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <Text>Actor 3: </Text>
+        <Text style={{ color: '#fff', fontWeight: "bold", marginRight: 20, fontSize: 30,}}>Actor 3: </Text>
         <Image source={{ uri: picture[2][0] }}  style={styles.image} />
       </View>
     )}
     {row4 && (
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <Text>Actor 4: </Text>
+        <Text style={{ color: '#fff', fontWeight: "bold", marginRight: 20, fontSize: 30,}}>Actor 4: </Text>
         <Image source={{ uri: picture[3][0] }}  style={styles.image}/>
       </View>
     )}
@@ -225,26 +231,30 @@ return (
         />
       ))}
     </View>
-    <View style={{ flexDirection: 'row', marginTop: 10, marginBottom: 30  }}>
-  {!row4 && (
+
+
+    {showConfetti && <Confetti />}
+    </ImageBackground>
+  </ScrollView>
+  <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center',backgroundColor: 'black'  }}>
+  {!row4 && mistakes < 5   && (
     <TouchableOpacity style={styles.button} onPress={handleSubmit}>
       <Text style={styles.buttonText}>Submit</Text>
     </TouchableOpacity>
   )}
-  {row4 && (
+  {row4 || mistakes == 5 && (
     <TouchableOpacity style={styles.button} onPress={handlePlayAgain}>
       <Text style={styles.buttonText}>Play Again!!</Text>
     </TouchableOpacity>
   )}
- {!row4 && (
+ {!row4  && mistakes < 5 && (
     <TouchableOpacity style={styles.shuffleButton} onPress={handleShuffleWords}>
       <Text style={styles.shuffleButtonText}>Shuffle</Text>
     </TouchableOpacity>
   )}
-</View>
 
-    {showConfetti && <Confetti />}
-  </ScrollView>
+</View>
+  </View>
 );
 };
 
