@@ -103,93 +103,14 @@ const GameBoardScreen = () => {
     setRow2(false);
     setRow3(false);
     setRow4(false);
+    setShowConfetti(false)
   };
 
   const movieIcons = Array.from({ length: 5 }, (_, index) => (
     <FontAwesomeIcon key={index} icon={faFilm} style={{ marginRight: 5 }} />
   ));
 
-  // const handleSubmit = () => {
-  //   if (selectedWords.size === 4) {
-  //     const selectedWordArray = Array.from(selectedWords);
 
-  //     const actorImages = [];
-  //     const matchingActors = [];
-
-  //     // Check if there is a quarterback that matches three out of four receivers
-  //     const isSameActor = allActors.some((actor) => {
-  //       const matchingMovies = selectedWordArray.filter((movieName) =>
-  //       actor.movies.some((movie) => movie.name === movieName)
-  //       );
-
-  //       if (matchingMovies.length === 3) {
-  //         matchingActors.push(actor.name);
-  //       }
-
-  //       const allMovieMatch = matchingMovies.length === 4;
-
-  //       if (allMovieMatch) {
-  //         actorImages.push(actor.imagePath); // Capture the QB's image path when a match is found
-  //       }
-
-  //       return allMovieMatch;
-  //     });
-
-  //     if (isSameActor) {
-  //       if (submittedWords.length !== 12){
-  //       Alert.alert('CORRECT!');
-  //       }
-  //       // Correctly guessed all WRs from the same QB
-  //       const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((movieName, idx) => ({ name: movieName, actorImagePath: actorImages[idx] }))];
-  //       setRow1(true)
-  //       setSubmittedWords(newSubmittedWords);
-  //       const images = [...picture]
-
-
-  //       images.push(actorImages)
-  //       setPicture(images)
-
-  //       if (submittedWords.length === 4){
-  //         setRow2(true)
-  //       }
-
-  //       if (submittedWords.length === 8){
-  //         setRow3(true)
-  //       }
-
-  //       if (submittedWords.length === 12){
-  //         setRow4(true)
-
-  //         Alert.alert('YOU WON!!!!!');
-  //       }
-
-  //       // Remove correctly guessed WRs from the game board
-  //       const remainingWords = gameWords.filter((movie) => !selectedWords.has(movie));
-
-  //       setGameWords(remainingWords);
-
-  //       setSelectedWords(new Set()); // Clear the selections
-  //     } else {
-
-  //       setMistakes((prev) => prev + 1);
-  //       if (mistakes + 1 >= 5) {
-  //         Alert.alert('YOU LOST!!');
-  //       } else {
-  //         // Check if there is only one quarterback matching three out of four receivers
-  //         if (matchingActors.length === 1) {
-  //           Alert.alert('WRONG!', 'BUT ONLY ONE OFF!');
-  //         } else {
-  //           Alert.alert('WRONG!', 'Selected words are not from the same actor.');
-  //         }
-  //         setSelectedWords(new Set());
-  //       }
-  //     }
-  //   } else {
-  //     // Show a popup message if less than 4 words are selected
-  //     Alert.alert('Error', 'Please select exactly 4 words.');
-
-  //   }
-  // };
 
   const handleSubmit = () => {
     const currentMistakes = mistakes + 1;
@@ -244,6 +165,7 @@ const GameBoardScreen = () => {
           setRow4(true)
 
           Alert.alert('YOU WON!!!!!');
+          setShowConfetti(true);
         }
 
         // Remove correctly guessed WRs from the game board
