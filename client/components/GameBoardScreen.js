@@ -11,7 +11,7 @@ import { styles } from './styles';
 const WordCard = ({ word, onSelect, isSelected }) => {
   return (
     <TouchableOpacity onPress={() => onSelect(word)} style={{ width: '40%', aspectRatio: 1, marginVertical: 5, marginRight: 10, padding: 5 }}>
-      <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'red', backgroundColor: isSelected ? 'grey' : 'lightgrey', justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, borderRadius: 10, borderWidth: 5, borderColor: 'green', backgroundColor: isSelected ? 'grey' : 'lightgrey', justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ textAlign: 'center', fontWeight: 'bold'}}>{word}</Text>
       </View>
     </TouchableOpacity>
@@ -105,9 +105,95 @@ const GameBoardScreen = () => {
     setRow4(false);
   };
 
+  const movieIcons = Array.from({ length: 5 }, (_, index) => (
+    <FontAwesomeIcon key={index} icon={faFilm} style={{ marginRight: 5 }} />
+  ));
 
+  // const handleSubmit = () => {
+  //   if (selectedWords.size === 4) {
+  //     const selectedWordArray = Array.from(selectedWords);
+
+  //     const actorImages = [];
+  //     const matchingActors = [];
+
+  //     // Check if there is a quarterback that matches three out of four receivers
+  //     const isSameActor = allActors.some((actor) => {
+  //       const matchingMovies = selectedWordArray.filter((movieName) =>
+  //       actor.movies.some((movie) => movie.name === movieName)
+  //       );
+
+  //       if (matchingMovies.length === 3) {
+  //         matchingActors.push(actor.name);
+  //       }
+
+  //       const allMovieMatch = matchingMovies.length === 4;
+
+  //       if (allMovieMatch) {
+  //         actorImages.push(actor.imagePath); // Capture the QB's image path when a match is found
+  //       }
+
+  //       return allMovieMatch;
+  //     });
+
+  //     if (isSameActor) {
+  //       if (submittedWords.length !== 12){
+  //       Alert.alert('CORRECT!');
+  //       }
+  //       // Correctly guessed all WRs from the same QB
+  //       const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((movieName, idx) => ({ name: movieName, actorImagePath: actorImages[idx] }))];
+  //       setRow1(true)
+  //       setSubmittedWords(newSubmittedWords);
+  //       const images = [...picture]
+
+
+  //       images.push(actorImages)
+  //       setPicture(images)
+
+  //       if (submittedWords.length === 4){
+  //         setRow2(true)
+  //       }
+
+  //       if (submittedWords.length === 8){
+  //         setRow3(true)
+  //       }
+
+  //       if (submittedWords.length === 12){
+  //         setRow4(true)
+
+  //         Alert.alert('YOU WON!!!!!');
+  //       }
+
+  //       // Remove correctly guessed WRs from the game board
+  //       const remainingWords = gameWords.filter((movie) => !selectedWords.has(movie));
+
+  //       setGameWords(remainingWords);
+
+  //       setSelectedWords(new Set()); // Clear the selections
+  //     } else {
+
+  //       setMistakes((prev) => prev + 1);
+  //       if (mistakes + 1 >= 5) {
+  //         Alert.alert('YOU LOST!!');
+  //       } else {
+  //         // Check if there is only one quarterback matching three out of four receivers
+  //         if (matchingActors.length === 1) {
+  //           Alert.alert('WRONG!', 'BUT ONLY ONE OFF!');
+  //         } else {
+  //           Alert.alert('WRONG!', 'Selected words are not from the same actor.');
+  //         }
+  //         setSelectedWords(new Set());
+  //       }
+  //     }
+  //   } else {
+  //     // Show a popup message if less than 4 words are selected
+  //     Alert.alert('Error', 'Please select exactly 4 words.');
+
+  //   }
+  // };
 
   const handleSubmit = () => {
+    const currentMistakes = mistakes + 1;
+
     if (selectedWords.size === 4) {
       const selectedWordArray = Array.from(selectedWords);
 
@@ -117,7 +203,7 @@ const GameBoardScreen = () => {
       // Check if there is a quarterback that matches three out of four receivers
       const isSameActor = allActors.some((actor) => {
         const matchingMovies = selectedWordArray.filter((movieName) =>
-        actor.movies.some((movie) => movie.name === movieName)
+          actor.movies.some((movie) => movie.name === movieName)
         );
 
         if (matchingMovies.length === 3) {
@@ -134,8 +220,8 @@ const GameBoardScreen = () => {
       });
 
       if (isSameActor) {
-        if (submittedWords.length !== 12){
-        Alert.alert('CORRECT!');
+        if (submittedWords.length !== 12) {
+          Alert.alert('CORRECT!');
         }
         // Correctly guessed all WRs from the same QB
         const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((movieName, idx) => ({ name: movieName, actorImagePath: actorImages[idx] }))];
@@ -143,19 +229,18 @@ const GameBoardScreen = () => {
         setSubmittedWords(newSubmittedWords);
         const images = [...picture]
 
-
         images.push(actorImages)
         setPicture(images)
 
-        if (submittedWords.length === 4){
+        if (submittedWords.length === 4) {
           setRow2(true)
         }
 
-        if (submittedWords.length === 8){
+        if (submittedWords.length === 8) {
           setRow3(true)
         }
 
-        if (submittedWords.length === 12){
+        if (submittedWords.length === 12) {
           setRow4(true)
 
           Alert.alert('YOU WON!!!!!');
@@ -169,8 +254,8 @@ const GameBoardScreen = () => {
         setSelectedWords(new Set()); // Clear the selections
       } else {
 
-        setMistakes((prev) => prev + 1);
-        if (mistakes + 1 >= 5) {
+        setMistakes(currentMistakes);
+        if (currentMistakes >= 5) {
           Alert.alert('YOU LOST!!');
         } else {
           // Check if there is only one quarterback matching three out of four receivers
@@ -190,11 +275,10 @@ const GameBoardScreen = () => {
   };
 
 
+
 return (
   <View style={{ flex: 1 }}>
-  <View style={{ backgroundColor: 'black', width: '100%', height: 40, justifyContent: 'center', alignItems: 'center' }}>
-    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>Mistakes:{5 - mistakes}</Text>
-  </View>
+
   <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width: '100%' }}>
     <ImageBackground source={require('../../assets/imax.jpg')} style={styles.background} pointerEvents="auto" >
     {row1 && (
@@ -236,13 +320,16 @@ return (
     {showConfetti && <Confetti />}
     </ImageBackground>
   </ScrollView>
+  <View style={{ backgroundColor: 'black', width: '100%', height: 40, justifyContent: 'center', alignItems: 'center' }}>
+<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, }}>  Mistakes Remaining: {5 - mistakes}</Text>
+  </View>
   <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center',backgroundColor: 'black'  }}>
   {!row4 && mistakes < 5   && (
     <TouchableOpacity style={styles.button} onPress={handleSubmit}>
       <Text style={styles.buttonText}>Submit</Text>
     </TouchableOpacity>
   )}
-  {row4 || mistakes == 5 && (
+  {(row4 || mistakes == 5) && (
     <TouchableOpacity style={styles.button} onPress={handlePlayAgain}>
       <Text style={styles.buttonText}>Play Again!!</Text>
     </TouchableOpacity>
@@ -252,8 +339,8 @@ return (
       <Text style={styles.shuffleButtonText}>Shuffle</Text>
     </TouchableOpacity>
   )}
-
 </View>
+
   </View>
 );
 };

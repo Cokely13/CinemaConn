@@ -16,7 +16,7 @@ const WelcomeScreen = ({ navigation }) => {
   return (
     <ImageBackground source={require('../../assets/imax.jpg')} style={styles.background} pointerEvents="auto" >
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Welcome to Cinema Connection!</Text>
+      {/* <Text style={styles.welcomeText}>Welcome to Cinema Connection!</Text> */}
       <Text style={styles.howToPlay} onPress={handleHowToPlay}>How To Play</Text>
       <TouchableOpacity style={styles.button} onPress={handleStartGame}><Text style={styles.buttonText}>Play!!</Text></TouchableOpacity>
     </View>
