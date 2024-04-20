@@ -4,8 +4,8 @@ import { View, Text, Button, Alert, Modal, ScrollView, Image, TouchableOpacity, 
 import { fetchActors } from '../store/allActorsStore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
-import Confetti from 'react-native-confetti';
 import { styles } from './styles';
+import LottieView from 'lottie-react-native'; // Import LottieView
 
 
 const WordCard = ({ word, onSelect, isSelected }) => {
@@ -239,7 +239,20 @@ return (
     </View>
 
 
-    {showConfetti && <Confetti />}
+    {showConfetti && (
+          <LottieView
+            source={require('../../assets/confetti.json')} // Ensure this path is correct
+            autoPlay
+            loop
+            style={{
+              width: 500, // Adjust width as needed
+              height: 500, // Adjust height as needed
+              alignSelf: 'center', // Center the animation horizontally
+              marginTop: 20, // Adjust margin top as needed
+              // Add more styles as needed
+            }}
+          />
+        )}
     </ImageBackground>
   </ScrollView>
   <View style={{ backgroundColor: 'black', width: '100%', height: 40, justifyContent: 'center', alignItems: 'center' }}>
