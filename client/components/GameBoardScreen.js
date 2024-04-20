@@ -203,6 +203,20 @@ return (
 
   <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center', width: '100%' }}>
     <ImageBackground source={require('../../assets/imax.jpg')} style={styles.background} pointerEvents="auto" >
+    {showConfetti && (
+          <LottieView
+            source={require('../../assets/confetti.json')} // Ensure this path is correct
+            autoPlay
+            loop
+            style={{
+              width: 500, // Adjust width as needed
+              height: 500, // Adjust height as needed
+              alignSelf: 'center', // Center the animation horizontally
+              marginTop: 20, // Adjust margin top as needed
+              // Add more styles as needed
+            }}
+          />
+        )}
     {row1 && (
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginTop: 20 }}>
         <Text style={{ color: '#fff', fontWeight: "bold", marginRight: 20, fontSize: 30,}} >Actor 1: </Text>
@@ -239,20 +253,7 @@ return (
     </View>
 
 
-    {showConfetti && (
-          <LottieView
-            source={require('../../assets/confetti.json')} // Ensure this path is correct
-            autoPlay
-            loop
-            style={{
-              width: 500, // Adjust width as needed
-              height: 500, // Adjust height as needed
-              alignSelf: 'center', // Center the animation horizontally
-              marginTop: 20, // Adjust margin top as needed
-              // Add more styles as needed
-            }}
-          />
-        )}
+
     </ImageBackground>
   </ScrollView>
   <View style={{ backgroundColor: 'black', width: '100%', height: 40, justifyContent: 'center', alignItems: 'center' }}>
