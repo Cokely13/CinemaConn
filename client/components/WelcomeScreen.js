@@ -4,7 +4,6 @@ import { styles } from './styles';
 
 
 const WelcomeScreen = ({ navigation }) => {
-  const [showConfetti, setShowConfetti] = useState(false);
 
   const handleStartGame = () => {
     navigation.navigate('GameBoard');
@@ -19,8 +18,9 @@ const WelcomeScreen = ({ navigation }) => {
   return (
     <ImageBackground source={require('../../assets/imax.jpg')} style={styles.background} pointerEvents="auto">
       <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={handleStartGame}><Text style={styles.buttonText}>Play</Text></TouchableOpacity>
+
         <Text style={styles.howToPlay} onPress={handleHowToPlay}>How To Play</Text>
-        <TouchableOpacity style={styles.button} onPress={handleStartGame}><Text style={styles.buttonText}>Play!!</Text></TouchableOpacity>
 
       </View>
     </ImageBackground>

@@ -217,6 +217,7 @@ return (
             }}
           />
         )}
+        {showConfetti && (<Text style={{ color: '#fff', fontWeight: "bold",  fontSize: 50, alignItems: 'center', marginBottom: '30'}}>CONGRATS!</Text>)}
     {row1 && (
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginTop: 20 }}>
         <Text style={{ color: '#fff', fontWeight: "bold", marginRight: 20, fontSize: 30,}} >Actor 1: </Text>

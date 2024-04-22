@@ -12,13 +12,13 @@ const Index = () => {
     <View style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Welcome">
-          <Stack.Screen name="Welcome" component={WelcomeScreen}  options={{ title: 'Cinema Connection!!!',
+          <Stack.Screen name="Welcome" component={WelcomeScreen}  options={{ title: 'Cinema Connection',
               headerStyle: {
                 backgroundColor: 'black',
                 // Change the color to whatever you desire
               },
               headerTintColor: 'white' }} />
-          <Stack.Screen name="GameBoard" component={GameBoardScreen} options={{ title: 'Game Board!',
+          <Stack.Screen name="GameBoard" component={GameBoardScreen} options={{ title: 'Game Board',
               headerStyle: {
                 backgroundColor: 'black', // Change the color to whatever you desire
               },
